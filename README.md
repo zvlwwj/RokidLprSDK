@@ -8,7 +8,7 @@ Rokid Plate Recognition SDK and demo project.
 
 ## cirtus_lpr_sdk
 
-Version：citruslprsdk.aar
+Version：1.0
 
 ### SDK接口说明
 
@@ -36,7 +36,7 @@ public String recognizationBGR(byte[] data, int w, int h, int method, long  obje
 ```
 public String updateModel(Context context)
 
-会将assets下的Citrus文件夹中的文件拷贝到应用程序的内部存储路径下
+会将assets下的Citrus文件夹中的文件拷贝到应用程序的内部存储路径/data/data/<application package>/files/Citrus下
 ```
 
 ## android_demo
