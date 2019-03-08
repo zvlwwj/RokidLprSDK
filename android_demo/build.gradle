@@ -33,7 +33,7 @@ ext {
     buildToolsVersion = "28.0.2"
     minSdkVersion = 21
     targetSdkVersion = 28
-    applicationId = "com.rokid.camera.cameralibrary"
+    applicationId = "com.rokid.camera.lpr"
     versionCode = 10
     versionName = "1.0.1"
     junitRunner = "android.support.test.runner.AndroidJUnitRunner"

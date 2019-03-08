@@ -1,7 +1,7 @@
-Rokid Plate Recognition SDK and demo project.
+Rokid Plate Recognition SDK and Demo Project.
 
 ***	
-|Author|Email|
+|SDK Author|Email|
 |---|---|
 |cmxnono|cmxnono@rokid.com|
 ***
@@ -22,7 +22,10 @@ public long init(Context context)
 
 ```
 public int[] detect(byte[] data, int w, int h, int method, long  object)
+返回值为车牌位置[x, y, width, height]，当有多个车牌时可能有多组数据
+
 public String recogAll(byte[] data, int w, int h, int method, int[] rects, long  object)
+返回值为车牌号
 ```
 
 * BGR数据输入识别
@@ -41,6 +44,10 @@ public String updateModel(Context context)
 
 ## android_demo
 
-demo功能：触摸屏幕，对车牌进行对焦，触发一次车牌识别。
+	可运行在普通安卓手机上，对预览界面内车牌进行自动识别。
+
+## glass_demo
+
+	运行在glass上，对固定视线区域内车牌进行自动识别。
 
 	

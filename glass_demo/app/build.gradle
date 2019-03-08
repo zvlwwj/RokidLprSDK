@@ -1,0 +1,44 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner rootProject.ext.junitRunner
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    buildToolsVersion '28.0.3'
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile deps.support.supportV4
+    compile deps.support.compatV7
+    compile deps.support.design
+    compile deps.support.recyclerviewV7
+    compile deps.support.annotations
+    compile deps.support.constraint
+    compile deps.support.test.junit
+    compile deps.support.constraint
+    androidTestCompile deps.support.test.runner
+    androidTestCompile deps.support.test.espresso
+    compile 'com.rokid:cameralibrary:1.0.6.14'
+    compile 'com.rokid:YUVLib:1.0.15'
+    implementation(name: 'citruslprsdk', ext: 'aar')
+}
