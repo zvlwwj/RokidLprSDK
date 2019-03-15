@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
                 // 针对预览画面(pWidth，pHeight)的坐标
                 int singleRect[] = {rects[i], rects[i + 1], rects[i + 2], rects[i + 3]};
                 startTime = System.currentTimeMillis();
-                String names = lpr.recogAll(b, pWidth, pHeight, 1, singleRect, lprHandler);
+                String names = lpr.recogAll(b, pWidth, pHeight, 0, singleRect, lprHandler);
                 if (names.length() > 0) {
                     long recogTime = System.currentTimeMillis() - startTime;
                     Log.d(TAG, "======== recog : name = " + names + "; time:" + recogTime + "(ms)");
