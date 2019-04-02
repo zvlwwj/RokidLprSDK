@@ -1,16 +1,49 @@
-Rokid Plate Recognition SDK and Demo Project.
+**Version: lpr_sdk 2.0.0**
 
-***	
-|SDK Author|Email|
-|---|---|
-|cmxnono|cmxnono@rokid.com|
 ***
 
-## cirtus_lpr_sdk
+# lpr_sdk
 
-Version：1.0
 
-### SDK接口说明
+## 1.  概述
+
+RokidLprSDK提供车牌检测和车牌识别接口。
+
+## 2. 集成说明
+
+### 2.1 添加三方依赖库
+在project的build.gradle中添加
+
+```
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven {url "http://mvnrepo.rokid-inc.com/nexus/content/repositories/snapshots/"}
+        maven {url "http://mvnrepo.rokid-inc.com/nexus/content/repositories/releases/"}
+    }
+}
+```
+
+在app的build.gradle中添加依赖
+
+```
+dependencies {
+    implementation 'com.rokid:facelib:2.1.0.1-SNAPSHOT'
+}
+```	
+
+### 2.2 需要如下权限
+
+相机权限：
+
+```
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-feature android:name="android.hardware.camera" />
+<uses-feature android:name="android.hardware.camera.autofocus" />
+```
+
+## 3. 接口说明
 
 * 初始化
 
@@ -41,12 +74,12 @@ public String updateModel(Context context)
 
 会将assets下的Citrus文件夹中的文件拷贝到应用程序的内部存储路径/data/data/<application package>/files/Citrus下
 ```
-
-## android_demo
+## 4. sample说明
+### 4.1 android_sample
 
 	可运行在普通安卓手机上，对预览界面内车牌进行自动识别。
 
-## glass_demo
+### 4.2 glass_sample
 
 	运行在glass上，对固定视线区域内车牌进行自动识别。
 
