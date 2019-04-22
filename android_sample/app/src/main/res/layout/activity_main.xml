@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.rokid.camerakit.cameralibrary.view.DefultCameraView
-        android:id="@+id/camera_view"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:preivewHeight="720"
-        app:preivewWidth="1280"/>
+        android:id="@+id/view_layout">
+
+    </android.support.constraint.ConstraintLayout>
 
     <com.rokid.camera.lpr.PlateModelView
         android:layout_width="match_parent"

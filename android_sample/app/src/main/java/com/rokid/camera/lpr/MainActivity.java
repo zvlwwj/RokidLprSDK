@@ -1,22 +1,28 @@
 package com.rokid.camera.lpr;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import com.rokid.camerakit.cameralibrary.view.DefultCameraView;
+import com.rokid.camerakit.cameralibrary.view.DefaultCameraView;
 import com.rokid.citrus.citruslprsdk.CitrusLPRSDK;
 
 public class MainActivity extends Activity {
 
     private final static String TAG = "LPR_" + MainActivity.class.getSimpleName();
 
-    private DefultCameraView cameraView;
+    private DefaultCameraView cameraView;
     private boolean needframe = true;
     private int frameCount = -1;
     private CitrusLPRSDK lpr = new CitrusLPRSDK();
@@ -74,16 +80,18 @@ public class MainActivity extends Activity {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    private void init() {
+
+        plateModelView = findViewById(R.id.plateModelView);
+
+        cameraView = new DefaultCameraView(MainActivity.this);
+        cameraView.setPreviewSize(1280, 720);
+        ConstraintLayout.LayoutParams params =
+                new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        ((ConstraintLayout)findViewById(R.id.view_layout)).addView(cameraView, params);
 
         lpr.updateModel(getApplicationContext());
         lprHandler = lpr.init(getApplicationContext());
-
-        cameraView =  findViewById(R.id.camera_view);
-        plateModelView = findViewById(R.id.plateModelView);
 
         pWidth = cameraView.getPreviewSizeWidth();
         pHeight = cameraView.getPreviewSizeHeight();
@@ -95,7 +103,7 @@ public class MainActivity extends Activity {
         plateModelView.setPreviewSize(sWidth, sHeight);
 
         Log.d(TAG, "preview [ width = " + pWidth + ", height = " + pHeight + " ]");
-        Log.d(TAG, "screen [ width = " + sWidth + ", height = " + sHeight + " ]");
+        Log.d(TAG, "screen  [ width = " + sWidth + ", height = " + sHeight + " ]");
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -108,19 +116,58 @@ public class MainActivity extends Activity {
                 }
             }
         });
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        Log.d(TAG, "requestCode = " + requestCode);
+        switch (requestCode){
+            case 1: {
+                switch (permissions[0]) {
+                    case Manifest.permission.CAMERA: {
+                        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                            init();
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Log.d(TAG, "onCreate()");
+
+        if (!(PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA))) {
+            Log.d(TAG, "no permission");
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.CAMERA}, 0x01);
+        }
+        else {
+            init();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        cameraView.onResume();
+        Log.d(TAG, "onResume");
+        if (cameraView != null) {
+            cameraView.onResume();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        cameraView.onPause();
+        Log.d(TAG, "onPause");
+        if (cameraView != null) {
+            cameraView.onPause();
+        }
     }
 
 }
